@@ -1,6 +1,6 @@
 ﻿// Learn more about F# at http://fsharp.org
 
-open System
+open System.IO
 open SourceExtractor.LogicModules
 
 let rec ArgumentParser state (args: string seq)= let input = List.ofSeq args
@@ -19,7 +19,15 @@ let rec ArgumentParser state (args: string seq)= let input = List.ofSeq args
 [<EntryPoint>]
 let main argv =
 
-    let args = ArgumentParser {OriginProjectPath = ""; TargetPath = ""; TargetNameSpace = ""} [|"-t"; "somePath/som"; "-o"; "tragst/sfs/sfs"; "DiffTool"|]
-    printfn "%A" args
-    printfn "Hello World from F#!"
+    let config = ArgumentParser {OriginProjectPath = ""; TargetPath = ""; TargetNameSpace = ""} argv
+    
+    if not(Directory.Exists(config.TargetPath)) then CommandRunner.RunDotnetProcess(config) |> ignore
+
+    //OriginCrawler.CrawlFileSystemTree config.OriginProjectPath config
+    //|> OriginCrawler.CopyProjectFiles config
+    let originTree = OriginCrawler.CrawlFileSystemTree config.OriginProjectPath config
+    OriginCrawler.CopyProjectFiles config originTree
+
+
+
     0 // return an integer exit code
