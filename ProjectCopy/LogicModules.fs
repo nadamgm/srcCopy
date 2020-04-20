@@ -31,10 +31,6 @@ module OriginCrawler =
                                                         Folder (dirInfo, subItems |> List.ofSeq)
 
 
-    //let ReplaceNameSpace cfg filepath = let fileContent = File.ReadAllText filepath
-    //                                    let projectFileName = Directory.GetFiles(cfg.OriginProjectPath, "*.csproj").[0].Split('.').[0]
-    //                                    let newContent = fileContent.Replace(projectFileName, cfg.TargetNameSpace)
-    //                                    File.WriteAllText(filepath, newContent)
 
     let ReplaceNameSpace cfg filepath = let fileContent = File.ReadAllText filepath
                                         let projectFileName = Directory.GetFiles(cfg.OriginProjectPath, "*.csproj").[0].Split('.').[0].Split('\\').Last()
