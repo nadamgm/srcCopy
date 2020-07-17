@@ -23,11 +23,6 @@ let main argv =
     
     if not(Directory.Exists(config.TargetPath)) then CommandRunner.RunDotnetProcess(config) |> ignore
 
-    //OriginCrawler.CrawlFileSystemTree config.OriginProjectPath config
-    //|> OriginCrawler.CopyProjectFiles config
     let originTree = OriginCrawler.CrawlFileSystemTree config.OriginProjectPath config
     OriginCrawler.CopyProjectFiles config originTree
-
-
-
     0 // return an integer exit code
